@@ -233,7 +233,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.13.10":
+"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10":
   version: 7.24.7
   resolution: "@babel/runtime@npm:7.24.7"
   dependencies:
@@ -1083,6 +1083,15 @@ __metadata:
     "@types/react-dom":
       optional: true
   checksum: 10c0/f29f3da5bd9a967b5a35e91ac2d1b223191c7a074550d9d9cc10a0c0baf62ba0705b32912a7d2ef1ea5c27dd5e130a9fda9cbe6c2a7f3c2037ed5dfed89aa8cc
+  languageName: node
+  linkType: hard
+
+"@radix-ui/react-icons@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@radix-ui/react-icons@npm:1.3.0"
+  peerDependencies:
+    react: ^16.x || ^17.x || ^18.x
+  checksum: 10c0/581657680e43fd13ff06e01f963e3afa94671d4ce6c3fb126e2c70c993ab8650faa55286974032dbccfecca4db57308fb66d53771d765887e03600cddee84ae5
   languageName: node
   linkType: hard
 
@@ -1947,6 +1956,25 @@ __metadata:
   version: 5.45.0
   resolution: "@tanstack/query-core@npm:5.45.0"
   checksum: 10c0/b1adb0e44a6294f8fc63d1f3915e657e29799ae761012a49430f2694f9fd4f7041984949f61d412ad43e5aaba3ea880ab89b3d2c309cb2860a2913029e9062e9
+  languageName: node
+  linkType: hard
+
+"@tanstack/query-devtools@npm:5.37.1":
+  version: 5.37.1
+  resolution: "@tanstack/query-devtools@npm:5.37.1"
+  checksum: 10c0/c52c320972e2b430da69f18295ddb2c62ea5c3c1b83481b225be799f7e955e32782d68871bddc141acc468cf4d7ad5dcdd2c88ff3edc90021d28e57252dfab8b
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query-devtools@npm:5.45.1":
+  version: 5.45.1
+  resolution: "@tanstack/react-query-devtools@npm:5.45.1"
+  dependencies:
+    "@tanstack/query-devtools": "npm:5.37.1"
+  peerDependencies:
+    "@tanstack/react-query": ^5.45.1
+    react: ^18 || ^19
+  checksum: 10c0/db419ea421df0bdeeb89b3cd47edbd3e0b6107874897727fb2252ff3b6cf4a35d479bdb12d8497e441f471bc34aa6afa2fc262cdb023719b809c41832ef0f6b4
   languageName: node
   linkType: hard
 
@@ -3520,8 +3548,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "github-popular-repos@workspace:."
   dependencies:
+    "@radix-ui/react-icons": "npm:1.3.0"
     "@radix-ui/themes": "npm:3.0.5"
     "@tanstack/react-query": "npm:5.45.1"
+    "@tanstack/react-query-devtools": "npm:5.45.1"
     "@types/react": "npm:18.2.66"
     "@types/react-dom": "npm:18.2.22"
     "@typescript-eslint/eslint-plugin": "npm:7.2.0"
@@ -3537,6 +3567,7 @@ __metadata:
     prettier: "npm:3.3.2"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
+    react-error-boundary: "npm:4.0.13"
     typescript: "npm:5.4.5"
     vite: "npm:5.2.0"
   languageName: unknown
@@ -4919,6 +4950,17 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 10c0/66dfc5f93e13d0674e78ef41f92ed21dfb80f9c4ac4ac25a4b51046d41d4d2186abc915b897f69d3d0ebbffe6184e7c5876f2af26bfa956f179225d921be713a
+  languageName: node
+  linkType: hard
+
+"react-error-boundary@npm:4.0.13":
+  version: 4.0.13
+  resolution: "react-error-boundary@npm:4.0.13"
+  dependencies:
+    "@babel/runtime": "npm:^7.12.5"
+  peerDependencies:
+    react: ">=16.13.1"
+  checksum: 10c0/6f3e0e4d7669f680ccf49c08c9571519c6e31f04dcfc30a765a7136c7e6fbbbe93423dd5a9fce12107f8166e54133e9dd5c2079a00c7a38201ac811f7a28b8e7
   languageName: node
   linkType: hard
 

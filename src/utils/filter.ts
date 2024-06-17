@@ -1,14 +1,31 @@
-import { ReposFilter, ReposQueryParams } from "../api/types";
-import { isArrayValue } from "./array";
-import { isParsableNumber } from "./number";
-import { isObjectKey } from "./object";
+import { ReposFilter, ReposQueryParams } from '../api/types';
+import { isArrayValue } from './array';
+import { isParsableNumber } from './number';
+import { isObjectKey } from './object';
 
 type FilterKey = keyof ReposFilter;
 
-const supportedFilterKeys = ['q', 'order', 'page', 'per_page', 'sort'] satisfies ReadonlyArray<FilterKey>;
-const supportedSorts = ['stars', 'forks', 'help-wanted-issues', 'updated'] satisfies ReposFilter['sort'][];
-const supportedOrders = ['asc', 'desc'] satisfies ReposFilter['order'][];
-const supportedVisibilities = ['public', 'private'] satisfies ReposFilter['q']['visibility'][];
+const supportedFilterKeys = [
+  'q',
+  'order',
+  'page',
+  'per_page',
+  'sort',
+] as const satisfies FilterKey[];
+const supportedSorts = [
+  'stars',
+  'forks',
+  'help-wanted-issues',
+  'updated',
+] as const satisfies ReposFilter['sort'][];
+const supportedOrders = [
+  'asc',
+  'desc',
+] as const satisfies ReposFilter['order'][];
+const supportedVisibilities = [
+  'public',
+  'private',
+] as const satisfies ReposFilter['q']['visibility'][];
 
 const validators = {
   q: (value) => typeof value === 'string',
@@ -22,9 +39,10 @@ const validators = {
 
 function parseQueryParams(paramsString: string): ReposQueryParams {
   const params: ReposQueryParams = {};
+  const encodedString = decodeURI(paramsString);
 
-  for (const param of paramsString.split("+")) {
-    const [key, value] = param.split(":");
+  for (const param of encodedString.split('+')) {
+    const [key, value] = param.split(':');
 
     if (key && !value) {
       params.searchToken = key;
@@ -61,7 +79,7 @@ function stringifyQueryParams(params: ReposQueryParams): string {
     }
   }
 
-  return encodeURI(stringifiedParams.join("+"));
+  return encodeURI(stringifiedParams.join('+'));
 }
 
 export function parseFilter(searchParams: URLSearchParams): ReposFilter {
@@ -80,13 +98,20 @@ export function parseFilter(searchParams: URLSearchParams): ReposFilter {
 
     if (key === 'q') {
       filter.q = parseQueryParams(value);
-    } else if (key === 'page' || key === 'per_page') {
-      filter[key] = parseInt(value);
-    } else if (key === 'sort') {
-      filter[key] = isArrayValue(supportedSorts, value) ? value : undefined;
-    } else if (key === 'order') {
-      filter[key] = isArrayValue(supportedOrders, value) ? value : undefined;
+      continue;
     }
+
+    if (key === 'page' || key === 'per_page') {
+      filter[key] = parseInt(value);
+      continue;
+    }
+
+    if (key === 'sort') {
+      filter[key] = isArrayValue(supportedSorts, value) ? value : undefined;
+      continue;
+    }
+
+    filter[key] = isArrayValue(supportedOrders, value) ? value : undefined;
   }
 
   return filter;
@@ -100,13 +125,18 @@ export function stringifyFilter(filter: ReposFilter): string {
       continue;
     }
 
-    const value = filter[key];
-
     if (key === 'q') {
       stringifiedFilter.set(key, stringifyQueryParams(filter[key]));
-    } else if (value) {
-      stringifiedFilter.set(key, filter[key]);
+      continue;
     }
+
+    const value = filter[key];
+
+    if (!value) {
+      continue;
+    }
+
+    stringifiedFilter.set(key, `${value}`);
   }
 
   return stringifiedFilter.toString();

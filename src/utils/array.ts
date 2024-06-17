@@ -1,2 +1,8 @@
-export const isArrayValue = <Array extends unknown[]>(array: Array, value: unknown): value is Array[0] =>
+export type ArrayItem<ArrayType extends readonly unknown[]> =
+  ArrayType extends readonly (infer ItemType)[] ? ItemType : never;
+
+export const isArrayValue = <ArrayType extends unknown[]>(
+  array: ArrayType,
+  value: unknown,
+): value is ArrayItem<ArrayType> =>
   Array.isArray(array) && array.includes(value);
