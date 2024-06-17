@@ -11,14 +11,17 @@ import {
 } from '@radix-ui/themes';
 import { StarIcon } from '@radix-ui/react-icons';
 import { Topics } from './Topics';
+import { useStarRepository } from '../../hooks/useStarRepository';
 
 export type RepositoryCardProps = {
   repository?: Repository;
   loading?: boolean;
-}
+};
 
 export const RepositoryCard = forwardRef<HTMLDivElement, RepositoryCardProps>(
   ({ repository, loading = false }, ref) => {
+    const { isStarred, toggleStar } = useStarRepository(repository?.full_name);
+
     if (!repository) {
       return null;
     }
@@ -26,7 +29,7 @@ export const RepositoryCard = forwardRef<HTMLDivElement, RepositoryCardProps>(
     const { owner, html_url, full_name, description, topics } = repository;
 
     return (
-      <Skeleton loading={loading} height="120px">
+      <Skeleton loading={loading} minHeight="120px">
         <Card size="2" ref={ref}>
           <Flex gap="1" justify="between">
             <Flex direction="column" gap="3">
@@ -53,7 +56,10 @@ export const RepositoryCard = forwardRef<HTMLDivElement, RepositoryCardProps>(
               <Topics topics={topics} />
             </Flex>
 
-            <IconButton>
+            <IconButton
+              variant={isStarred ? 'solid' : 'soft'}
+              onClick={toggleStar}
+            >
               <StarIcon />
             </IconButton>
           </Flex>

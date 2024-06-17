@@ -3,12 +3,13 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import { Repositories } from './Repositories';
+import { Error } from './Error';
 
 export const RepositoriesScreen = () => {
   return (
-    <Container>
+    <Container size="2" minHeight="100vh">
       <Suspense fallback={<Skeleton />}>
-        <ErrorBoundary fallback={<span>Error has happened</span>}>
+        <ErrorBoundary FallbackComponent={Error}>
           <Repositories />
         </ErrorBoundary>
       </Suspense>

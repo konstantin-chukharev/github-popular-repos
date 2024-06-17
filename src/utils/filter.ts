@@ -79,7 +79,7 @@ function stringifyQueryParams(params: ReposQueryParams): string {
     }
   }
 
-  return encodeURI(stringifiedParams.join('+'));
+  return stringifiedParams.join(' ');
 }
 
 export function parseFilter(searchParams: URLSearchParams): ReposFilter {
