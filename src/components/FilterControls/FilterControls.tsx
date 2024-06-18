@@ -53,7 +53,9 @@ export const FilterControls = ({
               placeholder="Language"
               disabled={starred}
               value={language}
-              onInput={(event) => { setLanguage(event.currentTarget.value); }}
+              onInput={(event) => {
+                setLanguage(event.currentTarget.value);
+              }}
             >
               <TextField.Slot>
                 <CodeIcon height="16" width="16" />

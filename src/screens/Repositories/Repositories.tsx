@@ -44,7 +44,9 @@ export const Repositories = () => {
           <RepositoryCard
             key={repository.id}
             repository={repository}
-            toggleStar={() => { toggleStar(repository); }}
+            toggleStar={() => {
+              toggleStar(repository);
+            }}
             hasStarred={() => hasStarred(repository)}
           />
         ))}
