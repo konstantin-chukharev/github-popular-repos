@@ -26,5 +26,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+    '@typescript-eslint/no-empty-function': 'off',
   },
 };

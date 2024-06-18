@@ -6,10 +6,7 @@ export type License = {
   node_id: string;
 };
 
-export type Owner<
-  Login extends string = string,
-  ID extends number = number,
-> = {
+export type Owner<Login extends string = string, ID extends number = number> = {
   login: Login;
   id: ID;
   node_id: string;
@@ -28,7 +25,7 @@ export type Owner<
   received_events_url: `https://api.github.com/users/${Login}/received_events`;
   type: 'Organization' | 'User';
   site_admin: boolean;
-}
+};
 
 export type Repository<
   Name extends string = string,
@@ -91,7 +88,7 @@ export type Repository<
   size: number;
   stargazers_count: number;
   watchers_count: number;
-  language: string;
+  language: string | null;
   has_issues: boolean;
   has_projects: boolean;
   has_downloads: boolean;
@@ -114,20 +111,26 @@ export type Repository<
   watchers: number;
   default_branch: string;
   score: number;
-}
+};
 
 export type GetRepositoriesResponse = {
   total_count: number;
   incomplete_results: boolean;
   items: Repository[];
-}
+};
+
+export type GetRepositoriesError = {
+  message: string;
+  documentation_url: 'https://docs.github.com/v3/search/';
+  status: string;
+};
 
 export type ReposQueryParams = {
   searchToken?: string;
   created?: string;
   language?: string;
   visibility?: 'public' | 'private';
-}
+};
 
 export type ReposFilter = {
   q: ReposQueryParams;
@@ -135,4 +138,4 @@ export type ReposFilter = {
   order?: 'asc' | 'desc';
   per_page?: number;
   page?: number;
-}
+};

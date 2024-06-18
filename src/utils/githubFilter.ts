@@ -12,16 +12,19 @@ const supportedFilterKeys = [
   'per_page',
   'sort',
 ] as const satisfies FilterKey[];
+
 const supportedSorts = [
   'stars',
   'forks',
   'help-wanted-issues',
   'updated',
 ] as const satisfies ReposFilter['sort'][];
+
 const supportedOrders = [
   'asc',
   'desc',
 ] as const satisfies ReposFilter['order'][];
+
 const supportedVisibilities = [
   'public',
   'private',
@@ -85,12 +88,10 @@ function stringifyQueryParams(params: ReposQueryParams): string {
 export function parseFilter(searchParams: URLSearchParams): ReposFilter {
   const filter: ReposFilter = { q: {} };
 
-  for (const key of searchParams.keys()) {
+  for (const [key, value] of searchParams.entries()) {
     if (!isArrayValue(supportedFilterKeys, key)) {
       throw Error(`[parseFilter]: Unexpected query parameter "${key}"`);
     }
-
-    const value = searchParams.get(key);
 
     if (!value || !validators[key](value)) {
       continue;
@@ -98,20 +99,19 @@ export function parseFilter(searchParams: URLSearchParams): ReposFilter {
 
     if (key === 'q') {
       filter.q = parseQueryParams(value);
-      continue;
     }
 
     if (key === 'page' || key === 'per_page') {
       filter[key] = parseInt(value);
-      continue;
     }
 
     if (key === 'sort') {
       filter[key] = isArrayValue(supportedSorts, value) ? value : undefined;
-      continue;
     }
 
-    filter[key] = isArrayValue(supportedOrders, value) ? value : undefined;
+    if (key === 'order') {
+      filter[key] = isArrayValue(supportedOrders, value) ? value : undefined;
+    }
   }
 
   return filter;

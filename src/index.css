@@ -5,6 +5,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  all: unset;
+}
+
 .radix-themes {
   --cursor-button: pointer;
   --cursor-checkbox: pointer;
