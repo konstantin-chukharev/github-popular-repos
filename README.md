@@ -1,34 +1,36 @@
 # github-popular-repos
 
-A tiny SPA app to show a list of Github's popular repos
+A tiny SPA app to show a list of GitHub's popular repos over the last week.
 
-## React + TypeScript + Vite
+## Tech Stack
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- React
+- React Router
+- React Query
+- TypeScript
+- Vite
+- Radix UI
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Show a list of popular repos over the last week with pagination
+- Filter by language
+- Starring a repository (data is stored in local storage)
+- Viewing starred repositories
 
-## Expanding the ESLint configuration
+## How to run
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Clone the repo
+2. Run `yarn` to install dependencies (Yarn v4 is installed via corepack. Here's a [guide](https://yarnpkg.com/getting-started/install) how to install it)
+3. Run `yarn dev` to start the development server
 
-- Configure the top-level `parserOptions` property like this:
+## How to build
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
+1. Run `yarn build` to build the app
+2. Run `yarn preview` to run the static server
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Build is located in the `dist` folder.
+
+## How to test
+
+1. Run `yarn test` to run the tests

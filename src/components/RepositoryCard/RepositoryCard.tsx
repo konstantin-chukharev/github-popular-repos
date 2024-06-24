@@ -1,37 +1,21 @@
 import './styles.css';
 
 import { forwardRef } from 'react';
-import { Card, Flex, Text, Link, Avatar, Badge } from '@radix-ui/themes';
-import {
-  StarIcon,
-  CodeIcon,
-  PersonIcon,
-  BackpackIcon,
-} from '@radix-ui/react-icons';
+import { Card, Flex, Text, Link, Avatar } from '@radix-ui/themes';
 
-import { Repository } from '../../api/types';
-import { formatDate } from '../../utils/formatDate';
 import { Topics } from './Topics';
 import { StarButton } from './StarButton';
+import { InfoBadges } from './InfoBadges';
+import type { RepositoryCardProps } from './types';
 
-export type RepositoryCardProps = {
-  repository: Repository;
-  toggleStar: () => void;
-  hasStarred: () => boolean;
-  isStarringAvailable: boolean;
-};
-
+/**
+ * Card displaying information about a GitHub repository.
+ * Includes the repository name, owner, description, topics, language and amount of stars.
+ * Allows starring and unstarring the repository.
+ */
 export const RepositoryCard = forwardRef<HTMLDivElement, RepositoryCardProps>(
   ({ repository, isStarringAvailable, toggleStar, hasStarred }, ref) => {
-    const {
-      owner,
-      html_url,
-      name,
-      description,
-      topics,
-      stargazers_count,
-      language,
-    } = repository;
+    const { owner, html_url, name, description, topics } = repository;
 
     return (
       <Card size="2" ref={ref} data-testid="RepositoryCard">
@@ -52,65 +36,26 @@ export const RepositoryCard = forwardRef<HTMLDivElement, RepositoryCardProps>(
                 href={html_url}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-testid="RepositoryName"
               >
                 {name}
               </Link>
             </Flex>
 
             {description ? (
-              <Text size="2" weight="medium" color="gray">
+              <Text
+                size="2"
+                weight="medium"
+                color="gray"
+                data-testid="RepositoryDescription"
+              >
                 {description}
               </Text>
             ) : null}
 
             <Topics topics={topics} />
 
-            <Flex gap="1" wrap="wrap">
-              <Badge size="2" color="gold" className="CardContentBadge">
-                <StarIcon />
-                {stargazers_count}
-              </Badge>
-
-              {language ? (
-                <Badge size="2" color="gray" className="CardContentBadge">
-                  <CodeIcon />
-                  <Link
-                    href={`https://github.com/topics/${language}`}
-                    color="gray"
-                    underline="none"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {language}
-                  </Link>
-                </Badge>
-              ) : null}
-
-              <Badge size="2" color="gray" className="CardContentBadge">
-                {owner.type === 'Organization' ? (
-                  <BackpackIcon />
-                ) : (
-                  <PersonIcon />
-                )}
-                <Link
-                  href={owner.html_url}
-                  color="gray"
-                  underline="none"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {owner.login}
-                </Link>
-              </Badge>
-
-              <Badge size="2" color="gray" className="CardContentBadge">
-                Created {formatDate(repository.created_at)}
-              </Badge>
-
-              <Badge size="2" color="gray" className="CardContentBadge">
-                Updated {formatDate(repository.pushed_at)}
-              </Badge>
-            </Flex>
+            <InfoBadges repository={repository} />
           </Flex>
 
           <StarButton

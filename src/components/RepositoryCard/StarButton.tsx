@@ -18,6 +18,7 @@ export const StarButton = forwardRef<
       disabled={disabled}
       variant={hasStarred ? 'solid' : 'soft'}
       onClick={onToggleStar}
+      data-testid="StarButton"
     >
       {hasStarred ? <StarFilledIcon /> : <StarIcon />}
     </IconButton>
@@ -25,7 +26,10 @@ export const StarButton = forwardRef<
 
   if (disabled) {
     return (
-      <Tooltip content="Unable to start the repository. Most likely there's no access to the storage or it's full">
+      <Tooltip
+        content="Unable to start the repository. Most likely there's no access to the storage or it's full"
+        data-testid="StarButtonTooltip"
+      >
         {content}
       </Tooltip>
     );

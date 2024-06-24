@@ -8,6 +8,10 @@ type PaginationControlsProps = {
   perPage: number;
 };
 
+/**
+ * Controls to navigate between pages of a paginated list.
+ * Shows the current count of items and buttons to go to the previous and next pages.
+ */
 export const PaginationControls = ({
   loading = false,
   totalCount,
@@ -40,15 +44,23 @@ export const PaginationControls = ({
 
   return (
     <Flex gap="2" justify="between" data-testid="PaginationControls">
-      <Button disabled={!hasPreviousPage} onClick={goToPreviousPage} data-testid="PreviousPageButton">
+      <Button
+        disabled={!hasPreviousPage}
+        onClick={goToPreviousPage}
+        data-testid="PreviousPageButton"
+      >
         Previous
       </Button>
 
-      <Skeleton loading={loading} width="100px">
+      <Skeleton loading={loading} width="100px" data-testid="CounterSkeleton">
         <Text weight="medium">{`${currentCount} of ${totalCount}`}</Text>
       </Skeleton>
 
-      <Button disabled={!hasNextPage} onClick={goToNextPage} data-testid="NextPageButton">
+      <Button
+        disabled={!hasNextPage}
+        onClick={goToNextPage}
+        data-testid="NextPageButton"
+      >
         Next
       </Button>
     </Flex>

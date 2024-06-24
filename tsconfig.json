@@ -18,8 +18,14 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "paths": {
+      "mocks/*": ["./mocks/*"],
+      "src/*": ["./src/*"],
+      "tests/*": ["./tests/*"]
+    }
   },
-  "include": ["src"],
+  "include": ["mocks", "src", "tests"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

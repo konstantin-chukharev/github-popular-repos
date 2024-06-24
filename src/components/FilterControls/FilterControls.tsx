@@ -9,7 +9,7 @@ import {
 } from '@radix-ui/themes';
 import { CodeIcon, MixerHorizontalIcon } from '@radix-ui/react-icons';
 
-import { AppFilter } from '../../utils/appFilter';
+import { AppFilter } from 'src/utils/appFilter';
 
 type FilterControlsProps = {
   loading?: boolean;
@@ -17,6 +17,11 @@ type FilterControlsProps = {
   onChange: (filter: AppFilter) => void;
 };
 
+/**
+ * Button to open a popover with filter controls.
+ * Controls include toggling starred repositories and filtering by language.
+ * onChange callback is called with the new filter when the apply button is clicked.
+ */
 export const FilterControls = ({
   loading = false,
   filter,
@@ -36,7 +41,7 @@ export const FilterControls = ({
         </Popover.Trigger>
 
         <Popover.Content size="2">
-          <Flex direction="column" gap="4">
+          <Flex direction="column" gap="4" data-testid="FilterPopover">
             <Flex gap="2" align="center" justify="between">
               <Text size="2" weight="medium">
                 Starred repositories
@@ -44,7 +49,7 @@ export const FilterControls = ({
 
               <Switch
                 disabled={!!language}
-                checked={starred}
+                defaultChecked={starred}
                 onCheckedChange={setStarred}
                 data-testid="StarredSwitch"
               />
