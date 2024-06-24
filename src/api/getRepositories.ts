@@ -14,6 +14,11 @@ export async function getRepositories({
   first = 20,
   page = 1,
 }: GetRepositoriesParams = {}) {
+  /*
+    ISO string has the format: "YYYY-MM-DDTHH:mm:ss.sssZ"
+    Splitting the string at 'T' gives us the date part in the format: "YYYY-MM-DD"
+    Which suits the GitHub API query parameter for date filtering
+  */
   const [weekAgoAsDate] = new Date(Date.now() - weekInMilliseconds)
     .toISOString()
     .split('T');
@@ -25,8 +30,6 @@ export async function getRepositories({
     per_page: first,
     page,
   });
-
-  // await new Promise((resolve) => setTimeout(resolve, 10000000));
 
   const response = await fetch(
     `${import.meta.env.VITE_GITHUB_API_URL}/search/repositories?${filter}`,

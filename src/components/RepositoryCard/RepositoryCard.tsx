@@ -1,35 +1,28 @@
+import './styles.css';
+
 import { forwardRef } from 'react';
-import { Repository } from '../../api/types';
-import {
-  Card,
-  Flex,
-  Text,
-  Link,
-  Avatar,
-  IconButton,
-  Badge,
-} from '@radix-ui/themes';
+import { Card, Flex, Text, Link, Avatar, Badge } from '@radix-ui/themes';
 import {
   StarIcon,
-  StarFilledIcon,
   CodeIcon,
   PersonIcon,
   BackpackIcon,
 } from '@radix-ui/react-icons';
+
+import { Repository } from '../../api/types';
+import { formatDate } from '../../utils/formatDate';
 import { Topics } from './Topics';
+import { StarButton } from './StarButton';
 
 export type RepositoryCardProps = {
-  repository?: Repository;
+  repository: Repository;
   toggleStar: () => void;
   hasStarred: () => boolean;
+  isStarringAvailable: boolean;
 };
 
 export const RepositoryCard = forwardRef<HTMLDivElement, RepositoryCardProps>(
-  ({ repository, toggleStar, hasStarred }, ref) => {
-    if (!repository) {
-      return null;
-    }
-
+  ({ repository, isStarringAvailable, toggleStar, hasStarred }, ref) => {
     const {
       owner,
       html_url,
@@ -41,9 +34,9 @@ export const RepositoryCard = forwardRef<HTMLDivElement, RepositoryCardProps>(
     } = repository;
 
     return (
-      <Card size="2" ref={ref}>
+      <Card size="2" ref={ref} data-testid="RepositoryCard">
         <Flex gap="1" justify="between">
-          <Flex direction="column" gap="3">
+          <Flex gap="3" direction="column">
             <Flex gap="2" align="center">
               <Avatar
                 size="2"
@@ -72,14 +65,14 @@ export const RepositoryCard = forwardRef<HTMLDivElement, RepositoryCardProps>(
 
             <Topics topics={topics} />
 
-            <Flex gap="1">
-              <Badge size="2" color="gold">
+            <Flex gap="1" wrap="wrap">
+              <Badge size="2" color="gold" className="CardContentBadge">
                 <StarIcon />
                 {stargazers_count}
               </Badge>
 
               {language ? (
-                <Badge size="2" color="gray">
+                <Badge size="2" color="gray" className="CardContentBadge">
                   <CodeIcon />
                   <Link
                     href={`https://github.com/topics/${language}`}
@@ -93,7 +86,7 @@ export const RepositoryCard = forwardRef<HTMLDivElement, RepositoryCardProps>(
                 </Badge>
               ) : null}
 
-              <Badge size="2" color="gray">
+              <Badge size="2" color="gray" className="CardContentBadge">
                 {owner.type === 'Organization' ? (
                   <BackpackIcon />
                 ) : (
@@ -109,15 +102,22 @@ export const RepositoryCard = forwardRef<HTMLDivElement, RepositoryCardProps>(
                   {owner.login}
                 </Link>
               </Badge>
+
+              <Badge size="2" color="gray" className="CardContentBadge">
+                Created {formatDate(repository.created_at)}
+              </Badge>
+
+              <Badge size="2" color="gray" className="CardContentBadge">
+                Updated {formatDate(repository.pushed_at)}
+              </Badge>
             </Flex>
           </Flex>
 
-          <IconButton
-            variant={hasStarred() ? 'solid' : 'soft'}
-            onClick={toggleStar}
-          >
-            {hasStarred() ? <StarFilledIcon /> : <StarIcon />}
-          </IconButton>
+          <StarButton
+            disabled={!isStarringAvailable}
+            hasStarred={hasStarred()}
+            onToggleStar={toggleStar}
+          />
         </Flex>
       </Card>
     );

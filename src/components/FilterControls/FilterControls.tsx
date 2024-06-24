@@ -26,10 +26,10 @@ export const FilterControls = ({
   const [language, setLanguage] = useState(filter.language);
 
   return (
-    <Flex justify="end">
+    <Flex justify="end" data-testid="FilterControls">
       <Popover.Root>
         <Popover.Trigger>
-          <Button disabled={loading}>
+          <Button disabled={loading} data-testid="FilterButton">
             Filter
             <MixerHorizontalIcon />
           </Button>
@@ -46,6 +46,7 @@ export const FilterControls = ({
                 disabled={!!language}
                 checked={starred}
                 onCheckedChange={setStarred}
+                data-testid="StarredSwitch"
               />
             </Flex>
 
@@ -56,6 +57,7 @@ export const FilterControls = ({
               onInput={(event) => {
                 setLanguage(event.currentTarget.value);
               }}
+              data-testid="LanguageTextField"
             >
               <TextField.Slot>
                 <CodeIcon height="16" width="16" />
@@ -66,6 +68,7 @@ export const FilterControls = ({
               onClick={() => {
                 onChange({ ...filter, starred, language });
               }}
+              data-testid="ApplyButton"
             >
               Apply
             </Button>

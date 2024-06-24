@@ -16,7 +16,7 @@ export const RepositoriesSkeleton = ({
   );
 
   return (
-    <Flex direction="column" gap="4" flexGrow="1" flexShrink="0">
+    <Flex direction="column" gap="4" flexGrow="1" flexShrink="0" data-testid="RepositoriesSkeleton">
       <FilterControls loading filter={{}} onChange={() => {}} />
 
       <Flex direction="column" gap="2" flexGrow="1" flexShrink="0">

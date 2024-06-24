@@ -2,7 +2,7 @@ import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { Callout, Code, Flex, Text } from '@radix-ui/themes';
 
 export const Error = ({ error }: { error: Error }) => (
-  <Flex direction="column" flexGrow="1" flexShrink="1" justify="center">
+  <Flex direction="column" flexGrow="1" flexShrink="1" justify="center" data-testid="RepositoriesError">
     <Callout.Root color="red" role="alert">
       <Callout.Icon>
         <ExclamationTriangleIcon />

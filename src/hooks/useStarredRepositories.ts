@@ -31,20 +31,50 @@ function fetchStarredRepositories() {
     });
 }
 
+function isLocalStorageAvailable() {
+  try {
+    const testKey = '__availability-test__';
+    window.localStorage.setItem(testKey, testKey);
+    window.localStorage.removeItem(testKey);
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
 type StarredRepositoriesOptions = {
   skip?: boolean;
 };
 
+/**
+ Hook to handle the logic of storing fetched repository in local storage that were starred by the user.
+ For simplicity does not check if local storage is over filled or if data stored matches the API schema.
+
+ Points for improvement:
+  - Add a limit to the number of starred repositories
+  - Add pagination to the starred repositories
+  - Handle QuotaExceededError when local storage is full
+  - Use zod to validate the data retrieved from local storage
+*/
 export function useStarredRepositories({
   skip = false,
 }: StarredRepositoriesOptions = {}) {
   const [isPending, startTransition] = useTransition();
+  const [isStarringAvailable, setStarringAvailable] = useState(
+    isLocalStorageAvailable,
+  );
 
   const [starredRepos, setStarredRepos] = useState<Repository[]>(
-    skip ? [] : fetchStarredRepositories(),
+    skip || !isStarringAvailable ? [] : fetchStarredRepositories(),
   );
 
   const toggleStar = useCallback((repo: Repository) => {
+    if (!isLocalStorageAvailable()) {
+      setStarringAvailable(false);
+      return;
+    }
+
     startTransition(() => {
       if (hasStarred(repo)) {
         removeRepo(repo);
@@ -74,6 +104,7 @@ export function useStarredRepositories({
   return {
     data,
     isPending,
+    isStarringAvailable,
     toggleStar,
     hasStarred,
     refetchStarredRepositories,

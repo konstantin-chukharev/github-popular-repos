@@ -39,8 +39,8 @@ export const PaginationControls = ({
   };
 
   return (
-    <Flex gap="2" justify="between">
-      <Button disabled={!hasPreviousPage} onClick={goToPreviousPage}>
+    <Flex gap="2" justify="between" data-testid="PaginationControls">
+      <Button disabled={!hasPreviousPage} onClick={goToPreviousPage} data-testid="PreviousPageButton">
         Previous
       </Button>
 
@@ -48,7 +48,7 @@ export const PaginationControls = ({
         <Text weight="medium">{`${currentCount} of ${totalCount}`}</Text>
       </Skeleton>
 
-      <Button disabled={!hasNextPage} onClick={goToNextPage}>
+      <Button disabled={!hasNextPage} onClick={goToNextPage} data-testid="NextPageButton">
         Next
       </Button>
     </Flex>

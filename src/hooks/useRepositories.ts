@@ -3,10 +3,20 @@ import {
   getRepositories,
   type GetRepositoriesParams,
 } from '../api/getRepositories';
-import { useStarredRepositories } from './useStarRepository';
+import { useStarredRepositories } from './useStarredRepositories';
 
 const oneHourInMs = 1000 * 60 * 60;
 
+/**
+ Hook to return repository search data from GitHub API.
+ Supports language filter and pagination.
+ If starred is set to true, it will return starred repositories from local storage instead.
+ Also provides controls and additional flags related to starring:
+  - toggleStar: function to star/unstar a repository
+  - hasStarred: function to check if a repository is starred
+  - isPending: flag to indicate if a star operation is pending
+  - isStarringAvailable: flag to indicate if local storage is available for starring
+*/
 export function useRepositories(
   options: GetRepositoriesParams & { starred?: boolean },
 ) {
