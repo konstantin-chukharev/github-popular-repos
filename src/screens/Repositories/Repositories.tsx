@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Callout, Flex } from '@radix-ui/themes';
 import { useSearchParams } from 'react-router-dom';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
@@ -14,17 +15,33 @@ export const Repositories = () => {
   const [searchParams, setSearchParams] = useSearchParams({ page: '1' });
   const filter = parseFilter(searchParams);
 
-  const { data, isStarringAvailable, toggleStar, hasStarred } = useRepositories(
-    {
-      page: filter.page,
-      first: pageSize,
-      language: filter.language,
-      starred: filter.starred,
-    },
-  );
+  const {
+    data,
+    isStarringAvailable,
+    toggleStar,
+    hasStarred,
+    refetchStarredRepositories,
+  } = useRepositories({
+    page: filter.page,
+    first: pageSize,
+    language: filter.language,
+    starred: filter.starred,
+  });
+
+  useEffect(() => {
+    if (filter.starred) {
+      refetchStarredRepositories();
+    }
+  }, [filter.starred, refetchStarredRepositories]);
 
   return (
-    <Flex direction="column" gap="4" flexGrow="1" flexShrink="0" data-testid="Repositories">
+    <Flex
+      direction="column"
+      gap="4"
+      flexGrow="1"
+      flexShrink="0"
+      data-testid="Repositories"
+    >
       <FilterControls
         filter={filter}
         onChange={(newFilter) => {
@@ -34,7 +51,11 @@ export const Repositories = () => {
 
       <Flex direction="column" gap="2" flexGrow="1" flexShrink="0">
         {data.total_count === 0 ? (
-          <Callout.Root color="gray" variant="soft" data-testid="NoRepositories">
+          <Callout.Root
+            color="gray"
+            variant="soft"
+            data-testid="NoRepositories"
+          >
             <Callout.Icon>
               <InfoCircledIcon />
             </Callout.Icon>

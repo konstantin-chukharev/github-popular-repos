@@ -25,8 +25,6 @@ function fetchStarredRepositories() {
       if (!value)
         throw Error(`[fetchStarredRepositories]: couldn't find key "${key}"`);
 
-      console.log(value);
-
       return JSON.parse(value) as Repository;
     });
 }
